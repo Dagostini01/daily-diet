@@ -5,8 +5,3 @@ export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.base.gray_7};
   padding: 0 24px;
 `;
-
-export const Title = styled.Text`
-  font-size: 50px;
-  color: ${({ theme }) => theme.colors.base.gray_1};
-`;

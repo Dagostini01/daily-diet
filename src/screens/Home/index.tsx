@@ -1,12 +1,39 @@
 import { Header } from "@components/Header";
 import { Typography } from "@components/Typography";
-import { Container, Title } from "./styles";
+import { Container } from "./styles";
 import { Card } from "@components/Card";
 import { Button } from "@components/Button";
-import { View } from "react-native";
+import { SectionList, Text, View } from "react-native";
 import { Plus } from "phosphor-react-native";
+import { Meal } from "@components/Meal";
 
 export function Home() {
+
+    const meals = [
+        {
+            title: '12.08.2025',
+            data: [
+                {
+                    id: '1',
+                    hour: '20:00',
+                    description: 'X-tudo',
+                    isOnTheDiet: false,
+                }
+            ]
+        },
+        {
+            title: '11.08.2025',
+            data: [
+                {
+                    id: '2',
+                    hour: '21:00',
+                    description: 'Salada',
+                    isOnTheDiet: true,
+                }
+            ]
+        },
+    ]
+
     return (
         <Container>
 
@@ -25,11 +52,40 @@ export function Home() {
 
                 <Button
                     title="Nova refeição"
-                    icon={<Plus color="white" size={18}/>}
+                    icon={<Plus color="white" size={18} />}
                     type="solid"
-                    isActive={false}
                 />
             </View>
+
+            <SectionList
+                sections={meals}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => <Meal key={item.id} {...item} onPress={() => { console.log(item.description) }} />}
+                showsVerticalScrollIndicator={false}
+                renderSectionHeader={({ section: { title } }) => (
+                    <Typography
+                        fontSize="title_sm"
+                        fontFamily="bold"
+                        color="gray_1"
+                        style={{ marginBottom: 8, marginTop: 32 }}
+                    >
+                        {title}
+                    </Typography>
+                )}
+                contentContainerStyle={
+                    meals.length === 0 && {
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }
+                }
+                ListEmptyComponent={() => (
+                    <>
+                        <Typography>Não há refeições cadastradas ainda.</Typography>
+                        <Typography>Vamos cadastrar refeições hoje?</Typography>
+                    </>
+                )}
+            />
 
         </Container>
     )
